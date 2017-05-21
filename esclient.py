@@ -1,7 +1,7 @@
-from __future__ import print_function
+
 import requests
 try:
-    from urllib import urlencode, quote_plus
+    from urllib.parse import urlencode, quote_plus
 except ImportError:
     from urllib.parse import urlencode, quote_plus
 
@@ -66,8 +66,8 @@ class ESClient:
         ignored.
 
         """
-        path_components = map(_utf8_encode, filter(None, path_components))
-        path_components = map(quote_plus, path_components)
+        path_components = list(map(_utf8_encode, [_f for _f in path_components if _f]))
+        path_components = list(map(quote_plus, path_components))
         path = '/'.join(path_components)
         if not path.startswith('/'):
             path = '/' + path
